@@ -4,11 +4,12 @@ import io.smallrye.reactive.messaging.kafka.KafkaMessage;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -18,16 +19,23 @@ public class Sender {
 
     private static final Logger LOGGER = Logger.getLogger(Sender.class.getName());
 
-    @Outgoing("data")
-    public CompletionStage<KafkaMessage<String, String>> send() {
-        CompletableFuture<KafkaMessage<String, String>> future = new CompletableFuture<>();
-        LOGGER.info("Sending message to kafka with the message hello from MicroProfile");
-        delay(() -> future.complete(KafkaMessage.of("kafka", "key", "hello from MicroProfile")));
-        return future;
+    private BlockingQueue<String> messages = new LinkedBlockingQueue<>();
+
+    public void add(String message) {
+        messages.add(message);
     }
 
-    private void delay(Runnable runnable) {
-        executor.schedule(runnable, 5, TimeUnit.SECONDS);
+    @Outgoing("data")
+    public CompletionStage<KafkaMessage<String, String>> send() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String message = messages.take();
+                LOGGER.info("Sending message to kafka with the message: " + message);
+                return KafkaMessage.of("kafka", "key", message);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 }
