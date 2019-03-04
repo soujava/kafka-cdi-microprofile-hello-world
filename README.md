@@ -1,6 +1,6 @@
 # kafka-cdi-microprofile-hello-world - A hello world using Apache Kafka and Eclipse Microprofile
 
-![Apache Kafka](http://apache-kafka.org/images/apache-kafka.png)
+![Apache Kafka](http://apache-kafka.org/images/apache-kafka.png =300x300)
 
 Apache Kafka is a community distributed streaming platform that has three key capabilities: publish and subscribe to streams of records, store streams of records in a fault-tolerant durable way and then process as streams as they occur. Apache Kafka has several success cases that include at the Java World.,
 
