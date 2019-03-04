@@ -1,7 +1,5 @@
 package org.sample;
 
-import org.eclipse.microprofile.reactive.messaging.Message;
-
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 
@@ -13,9 +11,12 @@ public class App {
 
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
-            Sender consumer = container.select(Sender.class).get();
-            Message<String> incoming = Message.of("hello");
-            consumer.send(incoming);
+            Sender sender = container.select(Sender.class).get();
+            Consumer consumer = container.select(Consumer.class).get();
+            for (int i = 0; i < 1_0000; i++) {
+                sender.send();
+            }
+
         }
     }
 }
