@@ -46,3 +46,14 @@ To connect as localhost, also defines the Kafka as localhost, within Linux appen
 ```shell
 127.0.0.1       localhost kafka
 ```
+
+
+## Install maven dependencies
+
+Run:
+
+```
+mvn clean install
+```
+
+Execute the `App` at your IDE and check the results.
