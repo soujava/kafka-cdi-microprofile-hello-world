@@ -7,15 +7,11 @@ import javax.enterprise.context.ApplicationScoped;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Logger;
 
 @ApplicationScoped
 public class Sender {
-
-    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     private static final Logger LOGGER = Logger.getLogger(Sender.class.getName());
 
