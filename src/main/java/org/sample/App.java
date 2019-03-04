@@ -11,11 +11,6 @@ public class App {
 
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
-            Sender sender = container.select(Sender.class).get();
-            Consumer consumer = container.select(Consumer.class).get();
-            for (int i = 0; i < 1_0000; i++) {
-                sender.send();
-            }
 
         }
     }

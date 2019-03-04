@@ -15,7 +15,7 @@ public class Sender {
 
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-    @Outgoing("kafka")
+    @Outgoing("data")
     public CompletionStage<KafkaMessage<String, String>> send() {
         CompletableFuture<KafkaMessage<String, String>> future = new CompletableFuture<>();
         delay(() -> future.complete(KafkaMessage.of("kafka", "key", "hello from MicroProfile")));
@@ -25,4 +25,5 @@ public class Sender {
     private void delay(Runnable runnable) {
         executor.schedule(runnable, 5, TimeUnit.SECONDS);
     }
+
 }
