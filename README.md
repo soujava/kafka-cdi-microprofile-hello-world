@@ -47,6 +47,11 @@ To connect as localhost, also defines the Kafka as localhost, within Linux appen
 127.0.0.1       localhost kafka
 ```
 
+To stop the services:
+
+```shell
+docker-compose -f docker-compose.yml down
+```
 
 ## Install maven dependencies
 
